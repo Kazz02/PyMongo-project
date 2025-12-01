@@ -50,3 +50,10 @@ async def get_customer(name: str):
             "address": customer.get("address", "")
         }
     return {"error": "Customer not found"}
+
+@app.delete("/customers/{name}")
+async def delete_customer(name: str):
+    result = mycol.delete_one({"name": name})
+    if result.deleted_count:
+        return {"message": "Customer deleted"}
+    return {"error": "Customer not found"}
