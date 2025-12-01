@@ -9,27 +9,35 @@ def main():
         print("1. Add Customer")
         print("2. View Customers")
         print("3. Delete Customer")
-        print("4. Exit")
+        print("4. Update Customer")
+        print("5. Exit")
         choice = input("Enter choice: ")
-
+        if choice == '1':
+            add_customer()
         if choice == '2':
             view_customers()
+        elif choice == '3':
+            delete_customer()
         elif choice == '4':
+            update_customer()
+        elif choice == '5':
          break
 
 def add_customer():
     name = input("Enter customer name: ")
+    nickname = input("Enter customer nickname: ")
     address = input("Enter customer address: ")
-    customer = {"name": name, "address": address}
+    customer = {"name": name, "nickname": nickname, "address": address}
     mycol.insert_one(customer)
     print("Customer added successfully.")
 
 def view_customers():
     for x in mycol.find():
-        print(f"{x['name']:<10} | {x['address']}")
+        print(f"{x['name']:<10} | {x['nickname']:<10} | {x['address']}")
 
 def update_customer():
     name = input("Enter the name of the customer to update: ")
+    new_nickname = input("Enter nickname: ")
     new_address = input("Enter new address: ")
     mycol.update_one({"name": name}, {"$set": {"address": new_address}})
     print("Customer info updated.")
