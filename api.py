@@ -23,3 +23,14 @@ async def get_customers():
             "address": x.get("address", "")
         })
     return customers
+
+@app.get("/customers/{name}")
+async def get_customer(name: str):
+    customer = mycol.find_one({"name": name})
+    if customer:
+        return {
+            "name": customer.get("name", ""),
+            "nickname": customer.get("nickname", ""),
+            "address": customer.get("address", "")
+        }
+    return {"error": "Customer not found"}
