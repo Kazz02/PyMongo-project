@@ -59,7 +59,7 @@ def delete_customer():
 def delete_all_customers():
     # Must confirm before deleting all customers
     password = input("Enter admin password to proceed: ")
-    if password != "admin123":  # You can change this password
+    if password != "admin123":  # Placeholder
         print("Access denied: Incorrect password.")
         return
 
