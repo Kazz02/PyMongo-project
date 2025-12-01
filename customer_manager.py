@@ -33,19 +33,23 @@ def add_customer():
 
 def view_customers():
     for x in mycol.find():
-        print(f"{x['name']:<10} | {x['nickname']:<10} | {x['address']}")
+        # Use .get() to avoid errors if a field is missing
+        print(f"{x.get('name', 'N/A'):<10} | {x.get('nickname', 'N/A'):<10} | {x.get('address', 'N/A')}")
 
 def update_customer():
     name = input("Enter the name of the customer to update: ")
     new_nickname = input("Enter nickname: ")
     new_address = input("Enter new address: ")
-    mycol.update_one({"name": name}, {"$set": {"address": new_address}})
+    mycol.update_one({"name": name}, {"$set": {"nickname": new_nickname, "address": new_address}})
     print("Customer info updated.")
     
 def delete_customer():
     name = input("Enter the name of the customer to delete: ")
-    mycol.delete_one({"name": name})
-    print("Customer deleted.")
+    if mycol.find_one({"name": name}):
+        mycol.delete_one({"name": name})
+        print("Customer deleted.")
+    else:
+        print("Customer not found.")
 
 if __name__ == "__main__":
     main()
