@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Manager</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .customer-card {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>My Customers</h1>
+    <button onclick="loadCustomers()">Refresh List</button>
+    
+    <div id="customer-list">
+    </div>
+
+    <script>
+        async function loadCustomers() {
+            try {
+                // Calls the API
+                const response = await fetch('http://127.0.0.1:8000/customers/');
+                const data = await response.json();
+                
+                // Gets the div where to put the list
+                const listDiv = document.getElementById('customer-list');
+                
+                // Clear existing content
+                listDiv.innerHTML = '';
+
+                // Checks each customer and creates a card for them
+                data.forEach(customer => {
+                    const card = document.createElement('div');
+                    card.className = 'customer-card';
+                    
+                    // Set the content
+                    card.innerHTML = `
+                        <h3>${customer.name}</h3>
+                        <p><strong>Nickname:</strong> ${customer.nickname || 'None'}</p>
+                        <p><strong>Address:</strong> ${customer.address}</p>
+                    `;
+                    
+                    // Add it to the main list
+                    listDiv.appendChild(card);
+                });
+                
+                console.log("Data loaded!", data);
+            } catch (error) {
+                console.error("Error loading customers:", error);
+                alert("Failed to load customers. Is the API server running?");
+            }
+        }
+        
+        // Load customers automatically when page opens
+        loadCustomers();
+    </script>
+</body>
+</html>
