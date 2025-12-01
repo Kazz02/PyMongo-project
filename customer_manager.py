@@ -20,8 +20,8 @@ def main():
             delete_customer()
         elif choice == '4':
             update_customer()
-        elif choice == '5':
-         break
+        elif choice == '5': 
+            break
 
 def add_customer():
     name = input("Enter customer name: ")
