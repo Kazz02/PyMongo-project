@@ -1,12 +1,21 @@
 from fastapi import FastAPI
 import pymongo 
 from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware # Allows the browser to access the API
 
 myclient  = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["mydatabase"]
 mycol = mydb["customers"]
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # All 
+    allow_credentials=True,
+    allow_methods=["*"], # All
+    allow_headers=["*"], # All
+)
 
 # Define the data model for a Customer
 class Customer(BaseModel):
