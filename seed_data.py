@@ -1,6 +1,8 @@
 import pymongo
 from faker import Faker
 
+# Way to add test data to MongoDB
+
 # Configuration
 MONGO_URI = "mongodb://localhost:27017/"
 DB_NAME = "mydatabase"
