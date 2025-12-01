@@ -22,11 +22,11 @@ def seed_database(count):
         customer = {
             "name": fake.name(),
             "nickname": fake.user_name(),
-            "address": fake.address().replace('\n', ', ')
+            "address": fake.address().replace('\n', ', '),
+            "is_fake": True # Mark as fake data
         }
         customers.append(customer)
     
-    # Insert all at once (more efficient)
     if customers:
         col.insert_many(customers)
         print(f"Successfully added {count} customers to the database!")

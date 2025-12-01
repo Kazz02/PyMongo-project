@@ -6,21 +6,26 @@ mycol = mydb["customers"]
 
 def main():
     while True:
+        print("\n--- Menu ---")
         print("1. Add Customer")
         print("2. View Customers")
         print("3. Delete Customer")
         print("4. Update Customer")
-        print("5. Exit")
+        print("5. Delete ALL Customers")
+        print("6. Exit")
         choice = input("Enter choice: ")
+        
         if choice == '1':
             add_customer()
-        if choice == '2':
+        elif choice == '2':
             view_customers()
         elif choice == '3':
             delete_customer()
         elif choice == '4':
             update_customer()
-        elif choice == '5': 
+        elif choice == '5':
+            delete_all_customers()
+        elif choice == '6': 
             break
 
 def add_customer():
@@ -50,6 +55,20 @@ def delete_customer():
         print("Customer deleted.")
     else:
         print("Customer not found.")
+
+def delete_all_customers():
+    # Must confirm before deleting all customers
+    password = input("Enter admin password to proceed: ")
+    if password != "admin123":  # You can change this password
+        print("Access denied: Incorrect password.")
+        return
+
+    confirm = input("Are you sure you want to delete ALL customers? This cannot be undone. (y/n): ")
+    if confirm.lower() == 'y':
+        x = mycol.delete_many({})
+        print(f"{x.deleted_count} customers deleted.")
+    else:
+        print("Operation cancelled.")
 
 if __name__ == "__main__":
     main()
