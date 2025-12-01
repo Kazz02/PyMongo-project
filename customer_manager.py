@@ -1,4 +1,5 @@
 import pymongo
+from export_data import export_to_csv
 
 myclient  = pymongo.MongoClient("mongodb://localhost:27017/")
 mydb = myclient["mydatabase"]
@@ -12,7 +13,8 @@ def main():
         print("3. Delete Customer")
         print("4. Update Customer")
         print("5. Delete ALL Customers")
-        print("6. Exit")
+        print("6. Export Customers to CSV")
+        print("7. Exit")
         choice = input("Enter choice: ")
         
         if choice == '1':
@@ -25,7 +27,9 @@ def main():
             update_customer()
         elif choice == '5':
             delete_all_customers()
-        elif choice == '6': 
+        elif choice == '6':
+            export_to_csv()
+        elif choice == '7': 
             break
 
 def add_customer():
